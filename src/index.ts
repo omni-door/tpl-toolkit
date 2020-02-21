@@ -304,12 +304,14 @@ async function init ({
 
 export function newTpl ({
   ts,
+  test,
   componentName,
   newPath,
   md,
   tpls
 }: {
   ts: boolean;
+  test: boolean;
   componentName: string;
   newPath: string;
   md: MARKDOWN;
@@ -346,7 +348,7 @@ export function newTpl ({
   // component tpl
   const content_index = tpl.component_index({ componentName });
   const content_readme = md === 'md' && tpl.component_readme({ componentName });
-  const content_test = tpl.component_test({ componentName });
+  const content_test = test && tpl.component_test({ componentName });
 
   const pathToFileContentMap = {
     [`index.${ts ? 'ts' : 'js'}`]: content_index,

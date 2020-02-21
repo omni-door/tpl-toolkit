@@ -12,6 +12,7 @@ if (args.length > 0) {
     // new template
     const options = {
       ts: true,
+      test: true,
       componentName: 'Omni',
       newPath: process.cwd(),
       md: 'md' as 'md'
