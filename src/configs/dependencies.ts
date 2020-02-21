@@ -1,4 +1,4 @@
-import { getDependency, arr2str, STRATEGY } from '@omni-door/tpl-common';
+import { getDependency, arr2str, STRATEGY } from '@omni-door/tpl-utils';
 import { devDependencies as devDependenciesMap } from './dependencies_stable_map';
 
 interface Config {

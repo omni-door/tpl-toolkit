@@ -1,4 +1,4 @@
-import { STRATEGY } from '@omni-door/tpl-common';
+import { STRATEGY } from '@omni-door/tpl-utils';
 
 export default (config: {
   name: string;

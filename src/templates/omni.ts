@@ -1,4 +1,5 @@
-import { PROJECT_TYPE, BUILD } from '@omni-door/tpl-common';
+import { PROJECT_TYPE, BUILD } from '@omni-door/tpl-utils';
+
 export default (config: {
   project_type: PROJECT_TYPE;
   build: BUILD;

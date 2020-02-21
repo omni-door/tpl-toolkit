@@ -5,8 +5,9 @@ import {
   PKJTOOL,
   STYLE,
   STRATEGY,
-  BUILD
-} from '@omni-door/tpl-common';
+  BUILD,
+  MARKDOWN
+} from '@omni-door/tpl-utils';
 import {
   babel as babelConfigJs,
   commitlint as commitlintConfigJs,
@@ -24,9 +25,15 @@ import {
   demo_html,
   demo_index_react,
   demo_webpack_dev,
+  component_index,
+  component_readme,
+  component_test,
   TPLS_INITIAL,
   TPLS_INITIAL_FN,
-  TPLS_INITIAL_RETURE
+  TPLS_INITIAL_RETURE,
+  TPLS_NEW,
+  TPLS_NEW_FN,
+  TPLS_NEW_RETURE
 } from './templates';
 import { devDependencies } from './configs/dependencies';
 import {
@@ -53,7 +60,10 @@ const default_tpl_list = {
   indexTpl,
   demo_html,
   demo_index_react,
-  demo_webpack_dev
+  demo_webpack_dev,
+  component_index,
+  component_readme,
+  component_test
 };
 
 export type ResultOfDependencies = string[] | { add?: string[]; remove?: string[]; };
@@ -100,7 +110,6 @@ async function init ({
   },
   success = () => logSuc('SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
 }: InitOptions) {
-  // reset illegal strategy
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
@@ -291,6 +300,73 @@ async function init ({
     installServerDevCli,
     installCustomDevCli
   ], success, error, isSlient);
+}
+
+export function newTpl ({
+  ts,
+  componentName,
+  newPath,
+  md,
+  tpls
+}: {
+  ts: boolean;
+  componentName: string;
+  newPath: string;
+  md: MARKDOWN;
+  tpls?: (tpls: TPLS_NEW) => TPLS_NEW_RETURE;
+}) {
+  let custom_tpl_list = {};
+  try {
+    custom_tpl_list = typeof tpls === 'function'
+      ? tpls(default_tpl_list)
+      : custom_tpl_list;
+
+    for (const tpl_name in custom_tpl_list) {
+      const name = tpl_name as keyof TPLS_NEW_RETURE;
+      const list = custom_tpl_list as TPLS_NEW_RETURE;
+      const tpl = list[name];
+      const tplFactory = (config: any) => {
+        try {
+          return tpl && tpl(config);
+        } catch (err) {
+          logWarn(JSON.stringify(err));
+          logWarn(`自定义模板 [${name}] 解析出错，将使用默认模板进行创建组件！(The custom template [${name}] parsing occured error, the default template will be used for initialization!)`);    
+        }
+
+        return default_tpl_list[name](config);
+      };
+
+      (list[name] as TPLS_NEW_FN) = tplFactory as TPLS_NEW_FN;
+    }
+  } catch (err_tpls) {
+    logWarn(JSON.stringify(err_tpls));
+    logWarn('生成自定义模板出错，将全部使用默认模板进行创建组件！(The custom template generating occured error, all will be initializated with the default template!)');
+  }
+  const tpl = { ...default_tpl_list, ...custom_tpl_list };
+  // component tpl
+  const content_index = tpl.component_index({ componentName });
+  const content_readme = md === 'md' && tpl.component_readme({ componentName });
+  const content_test = tpl.component_test({ componentName });
+
+  const pathToFileContentMap = {
+    [`index.${ts ? 'ts' : 'js'}`]: content_index,
+    [`__test__/index.test.${
+      ts
+        ? 'ts'
+        : 'js'
+    }`]: content_test,
+    'README.md': content_readme
+  }
+  /**
+   * create files
+   */
+  const file_path = (p: string) => path.resolve(newPath, p);
+  for (const p in pathToFileContentMap) {
+    output_file({
+      file_path: file_path(p),
+      file_content: pathToFileContentMap[p]
+    });
+  }
 }
 
 export default init;

@@ -14,6 +14,9 @@ import mocha from './mocha';
 import demo_index_react from './demo/index_react';
 import demo_html from './demo/html';
 import demo_webpack_dev from './demo/webpack_dev';
+import component_index from './new/index';
+import component_readme from './new/readme';
+import component_test from './new/test';
 
 export { default as babel } from './babel';
 export { default as commitlint } from './commitlint';
@@ -31,6 +34,9 @@ export { default as mocha } from './mocha';
 export { default as demo_index_react } from './demo/index_react';
 export { default as demo_html } from './demo/html';
 export { default as demo_webpack_dev } from './demo/webpack_dev';
+export { default as component_index } from './new/index';
+export { default as component_readme } from './new/readme';
+export { default as component_test } from './new/test';
 
 const tpls = {
   babel,
@@ -48,15 +54,34 @@ const tpls = {
   demo_webpack_dev,
   indexTpl,
   karma,
-  mocha
+  mocha,
+  component_index,
+  component_readme,
+  component_test
 };
 
-export type TPLS_INITIAL = {
+type TPLS = {
   [T in keyof typeof tpls]: typeof tpls[T];
 };
+
+export type TPLS_INITIAL = Omit<TPLS,
+  'component_index' |
+  'component_readme' |
+  'component_test'
+>;
 
 export type TPLS_INITIAL_FN = TPLS_INITIAL[keyof TPLS_INITIAL];
 
 export type TPLS_INITIAL_RETURE = Partial<TPLS_INITIAL>;
+
+export type TPLS_NEW = Pick<TPLS,
+  'component_index' |
+  'component_readme' |
+  'component_test'
+>;
+
+export type TPLS_NEW_FN = TPLS_NEW[keyof TPLS_NEW];
+
+export type TPLS_NEW_RETURE = Partial<TPLS_NEW>;
 
 export default tpls;
