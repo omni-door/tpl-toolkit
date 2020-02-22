@@ -111,7 +111,6 @@ async function init ({
 }: InitOptions) {
 
   // 模板解析
-  logInfo('模板解析中 (Parsing templates, please wait patiently)');
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
@@ -135,7 +134,6 @@ async function init ({
 
       (list[name] as TPLS_INITIAL_FN) = tplFactory as TPLS_INITIAL_FN;
     }
-    logInfo('模板解析完成 (Parsing templates completed!)');
   } catch (err_tpls) {
     logWarn(JSON.stringify(err_tpls));
     logWarn('生成自定义模板出错，将全部使用默认模板进行初始化！(The custom template generating occured error, all will be initializated with the default template!)');
@@ -144,7 +142,6 @@ async function init ({
   const project_type = 'toolkit';
 
   // 生成项目文件
-  logInfo('项目文件生成中 (Generating files, please wait patiently)');
   const pathToFileContentMap = {
     // default files
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
@@ -178,10 +175,8 @@ async function init ({
       file_content: pathToFileContentMap[p]
     });
   }
-  logInfo('项目文件生成完毕 (Generating files completed!)');
 
   // 项目依赖解析
-  logInfo('项目依赖解析中 (Parsing dependencies, please wait patiently)');
   let installCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add --cwd ${initPath}` : `${pkgtool} install --save --prefix ${initPath}`;
   let installDevCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add -D --cwd ${initPath}` : `${pkgtool} install --save-dev --prefix ${initPath}`;
   if (pkgtool === 'cnpm' && initPath !== process.cwd()) {
@@ -260,10 +255,8 @@ async function init ({
   const installCommitlintDevCli = commitlintDepStr ? `${installDevCliPrefix} ${commitlintDepStr}` : '';
   const installServerDevCli = devServerDepStr ? `${installDevCliPrefix} ${devServerDepStr}` : '';
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
-  logInfo('项目依赖解析完成 (Parsing dependencies completed)');
 
   // 项目依赖安装
-  logInfo('项目依赖安装中 (Installing dependencies, please wait patiently)');
   exec([
     installCli,
     installDevCli,
