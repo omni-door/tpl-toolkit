@@ -1,7 +1,9 @@
 import path from 'path';
 import {
+  spinner,
   arr2str,
   intersection,
+  logInfo,
   PKJTOOL,
   STYLE,
   STRATEGY,
@@ -105,11 +107,16 @@ async function init ({
   dependencies: dependencies_custom,
   devDependencies: devDependencies_custom,
   error = () => {
-    logErr('SDK工具库项目初始化失败！(The SDK-Tool project initialization has been occured some error!)');
+    spinner.state('fail', 'SDK工具库项目初始化失败！(The SDK-Tool project initialization has been occured some error!)');
     process.exit(1);
   },
-  success = () => logSuc('SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
+  success = () => spinner.state('succeed', 'SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
 }: InitOptions) {
+  spinner.color('green');
+  spinner.prefix('arrow3');
+
+  // 模板解析
+  spinner.state('start', '模板解析中 (Parsing templates, please wait patiently)');
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
@@ -140,64 +147,30 @@ async function init ({
   const tpl = { ...default_tpl_list, ...custom_tpl_list };
   const project_type = 'toolkit';
 
-  // default files
-  const content_omni = tpl.omni({
-    project_type,
-    build,
-    ts,
-    test,
-    eslint,
-    commitlint,
-    mdx: false
-  });
-  const content_pkg = tpl.pkj({
-    name,
-    ts,
-    test,
-    eslint,
-    commitlint,
-    strategy
-  });
-  const content_gitignore = tpl.gitignore();
-
-  // demo files
-  const content_demo_index = tpl.demo_index_react({ ts });
-  const content_demo_html = tpl.demo_html({ name });
-  const content_demo_webpack = tpl.demo_webpack_dev({ name, ts });
-  
-  // tsconfig
-  const content_ts = ts && tpl.tsconfig();
-
-  // test files
-  const content_mocha = test && tpl.mocha({ ts });
-  const content_karma = test && tpl.karma({ ts });
-
-  // lint files
-  const content_eslintrc = eslint && tpl.eslint({ ts });
-  const content_eslintignore = eslint && tpl.eslintignore();
-  const content_commitlint = commitlint && tpl.commitlint({ name });
-
-  // build files
-  const content_babel = tpl.babel({ ts });
-
-  // ReadMe
-  const content_readMe = tpl.readme({ name, configFileName });
-
+  // 生成项目文件
+  spinner.text('项目文件生成中 (Generating files, please wait patiently)');
   const pathToFileContentMap = {
-    [`${configFileName}`]: content_omni,
-    'package.json': content_pkg,
-    '.gitignore': content_gitignore,
-    'tsconfig.json': content_ts,
-    '.eslintrc.js': content_eslintrc,
-    '.eslintignore': content_eslintignore,
-    'commitlint.config.js': content_commitlint,
-    'babel.config.js': content_babel,
-    'README.md': content_readMe,
-    [`demo/index.${ts ? 'tsx' : 'jsx'}`]: content_demo_index,
-    'demo/index.html': content_demo_html,
-    'demo/webpack.config.js': content_demo_webpack,
-    'mocha.opts': content_mocha,
-    'karma.conf.js': content_karma,
+    // default files
+    [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
+    'package.json': tpl.pkj({ name, ts, test, eslint, commitlint, strategy }),
+    '.gitignore': tpl.gitignore(),
+    // tsconfig
+    'tsconfig.json': ts && tpl.tsconfig(),
+    // lint files
+    '.eslintrc.js': eslint && tpl.eslint({ ts }),
+    '.eslintignore': eslint && tpl.eslintignore(),
+    'commitlint.config.js': commitlint && tpl.commitlint({ name }),
+    // build files
+    'babel.config.js': tpl.babel({ ts }),
+    // ReadMe
+    'README.md': tpl.readme({ name, configFileName }),
+    // demo files
+    [`demo/index.${ts ? 'tsx' : 'jsx'}`]: tpl.demo_index_react({ ts }),
+    'demo/index.html': tpl.demo_html({ name }),
+    'demo/webpack.config.js': tpl.demo_webpack_dev({ name, ts }),
+    // test files
+    'mocha.opts': test && tpl.mocha({ ts }),
+    'karma.conf.js': test && tpl.karma({ ts }),
   }
   /**
    * create files
@@ -210,6 +183,8 @@ async function init ({
     });
   }
 
+  // 项目依赖解析
+  spinner.text('项目依赖解析中 (Parsing dependencies, please wait patiently)');
   let installCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add --cwd ${initPath}` : `${pkgtool} install --save --prefix ${initPath}`;
   let installDevCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add -D --cwd ${initPath}` : `${pkgtool} install --save-dev --prefix ${initPath}`;
   if (pkgtool === 'cnpm' && initPath !== process.cwd()) {
@@ -289,6 +264,8 @@ async function init ({
   const installServerDevCli = devServerDepStr ? `${installDevCliPrefix} ${devServerDepStr}` : '';
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
 
+  // 项目依赖安装
+  spinner.text('项目依赖安装中 (Installing dependencies, please wait patiently)');
   exec([
     installCli,
     installDevCli,
@@ -317,6 +294,7 @@ export function newTpl ({
   md: MARKDOWN;
   tpls?: (tpls: TPLS_NEW) => TPLS_NEW_RETURE;
 }) {
+  logInfo(`开始创建 ${componentName} 组件 (Start create ${componentName} component)`);
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
