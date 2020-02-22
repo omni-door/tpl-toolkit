@@ -43,6 +43,7 @@ import {
 } from './templates';
 import { devDependencies } from './configs/dependencies';
 import { devDependencies as devDependencyMap } from './configs/dependencies_stable_map';
+export { setBrand, setLogo } from '@omni-door/tpl-utils';
 
 const default_tpl_list = {
   babel: babelConfigJs,
@@ -148,7 +149,7 @@ async function init ({
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
     'package.json': tpl.pkj({ name, ts, test, eslint, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
     '.gitignore': tpl.gitignore(),
-    [`src/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
+    [`src/tookit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
     // tsconfig
     'tsconfig.json': ts && tpl.tsconfig(),
     // lint files
