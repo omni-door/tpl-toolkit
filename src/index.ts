@@ -103,7 +103,7 @@ async function init ({
   commitlint,
   tpls,
   pkgtool = 'yarn',
-  isSlient,
+  isSlient = true,
   dependencies: dependencies_custom,
   devDependencies: devDependencies_custom,
   error = () => {
