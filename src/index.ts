@@ -103,7 +103,7 @@ async function init ({
   commitlint,
   tpls,
   pkgtool = 'yarn',
-  isSlient = true,
+  isSlient,
   dependencies: dependencies_custom,
   devDependencies: devDependencies_custom,
   error = () => {
@@ -113,7 +113,7 @@ async function init ({
   success = () => spinner.state('succeed', 'SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
 }: InitOptions) {
   spinner.color('green');
-  spinner.prefix('arrow3');
+  spinner.prefix('bouncingBar');
 
   // 模板解析
   spinner.state('start', '模板解析中 (Parsing templates, please wait patiently)');
@@ -140,6 +140,7 @@ async function init ({
 
       (list[name] as TPLS_INITIAL_FN) = tplFactory as TPLS_INITIAL_FN;
     }
+    spinner.state('succeed', '模板解析完成 (Parsing templates completed!)');
   } catch (err_tpls) {
     logWarn(JSON.stringify(err_tpls));
     logWarn('生成自定义模板出错，将全部使用默认模板进行初始化！(The custom template generating occured error, all will be initializated with the default template!)');
@@ -182,6 +183,7 @@ async function init ({
       file_content: pathToFileContentMap[p]
     });
   }
+  spinner.state('succeed', '项目文件生成完毕 (Generating files completed!)');
 
   // 项目依赖解析
   spinner.state('start', '项目依赖解析中 (Parsing dependencies, please wait patiently)');
@@ -263,6 +265,7 @@ async function init ({
   const installCommitlintDevCli = commitlintDepStr ? `${installDevCliPrefix} ${commitlintDepStr}` : '';
   const installServerDevCli = devServerDepStr ? `${installDevCliPrefix} ${devServerDepStr}` : '';
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
+  spinner.state('succeed', '项目依赖解析完成 (Parsing dependencies completed)');
 
   // 项目依赖安装
   spinner.state('start', '项目依赖安装中 (Installing dependencies, please wait patiently)');
