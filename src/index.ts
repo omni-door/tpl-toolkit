@@ -148,7 +148,7 @@ async function init ({
   const project_type = 'toolkit';
 
   // 生成项目文件
-  spinner.text('项目文件生成中 (Generating files, please wait patiently)');
+  spinner.state('start', '项目文件生成中 (Generating files, please wait patiently)');
   const pathToFileContentMap = {
     // default files
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
@@ -184,7 +184,7 @@ async function init ({
   }
 
   // 项目依赖解析
-  spinner.text('项目依赖解析中 (Parsing dependencies, please wait patiently)');
+  spinner.state('start', '项目依赖解析中 (Parsing dependencies, please wait patiently)');
   let installCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add --cwd ${initPath}` : `${pkgtool} install --save --prefix ${initPath}`;
   let installDevCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add -D --cwd ${initPath}` : `${pkgtool} install --save-dev --prefix ${initPath}`;
   if (pkgtool === 'cnpm' && initPath !== process.cwd()) {
@@ -265,7 +265,7 @@ async function init ({
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
 
   // 项目依赖安装
-  spinner.text('项目依赖安装中 (Installing dependencies, please wait patiently)');
+  spinner.state('start', '项目依赖安装中 (Installing dependencies, please wait patiently)');
   exec([
     installCli,
     installDevCli,
