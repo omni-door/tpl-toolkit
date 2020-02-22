@@ -32,8 +32,10 @@ export default (config: {
     }
     ${
       eslint
-        ? `"lint": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'}",
-        "lint:fix": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'} --fix",`
+        ? `"lint": "npm run lint:es",
+        "lint:fix": "npm run lint:es_fix",
+        "lint:es": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'}",
+        "lint:es_fix": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'} --fix",`
         : ''
     }
     ${
