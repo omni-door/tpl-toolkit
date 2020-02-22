@@ -15,9 +15,9 @@ import {
   MARKDOWN
 } from '@omni-door/tpl-utils';
 import {
-  babel as babelConfigJs,
-  commitlint as commitlintConfigJs,
-  eslint as eslintrcJS,
+  babel,
+  commitlint,
+  eslint,
   eslintignore,
   gitignore,
   npmignore,
@@ -46,9 +46,9 @@ import { devDependencies as devDependencyMap } from './configs/dependencies_stab
 export { setBrand, setLogo } from '@omni-door/tpl-utils';
 
 const default_tpl_list = {
-  babel: babelConfigJs,
-  commitlint: commitlintConfigJs,
-  eslint: eslintrcJS,
+  babel,
+  commitlint,
+  eslint,
   eslintignore,
   gitignore,
   npmignore,
