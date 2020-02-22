@@ -72,12 +72,12 @@ export default (config: {
   "keywords": [],
   "author": "",
   ${
-  type_react && ts && strategy === 'stable'
-    ? `"resolutions": {
-      "@types/react": '${type_react}'
-    },`
-    : ''
-}
+    type_react && ts && strategy === 'stable'
+      ? `"resolutions": {
+        "@types/react": '${type_react}'
+      },`
+      : ''
+  }
   "license": "ISC"
 }`;
 };
