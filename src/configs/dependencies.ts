@@ -98,6 +98,8 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
     dependency('ip'),
     dependency('detect-port'),
     dependency('express'),
+    dependency('webpack'),
+    dependency('webpack-cli'),
     dependency('webpack-dev-middleware'),
     dependency('webpack-hot-middleware'),
     dependency('http-proxy-middleware'),

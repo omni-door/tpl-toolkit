@@ -105,10 +105,10 @@ async function init ({
   dependencies: dependencies_custom,
   devDependencies: devDependencies_custom,
   error = () => {
-    logErr('SDK工具库项目初始化失败！(The SDK-Tool project initialization has been occured some error!)');
+    logErr('SDK工具库项目安装失败！(The SDK-Tool project installation has been occured some error!)');
     process.exit(1);
   },
-  success = () => logSuc('SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
+  success = () => logSuc('SDK工具库项目安装完成！(The SDK-Tool project installation has been completed!)')
 }: InitOptions) {
 
   // 模板解析
@@ -148,6 +148,7 @@ async function init ({
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
     'package.json': tpl.pkj({ name, ts, test, eslint, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
     '.gitignore': tpl.gitignore(),
+    [`src/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
     // tsconfig
     'tsconfig.json': ts && tpl.tsconfig(),
     // lint files

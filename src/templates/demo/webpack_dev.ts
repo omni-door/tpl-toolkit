@@ -8,17 +8,18 @@ export default function (config: {
 
 const path = require('path');
 const webpack = require('webpack');
+const WebpackBar = require('webpackbar');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: [
     'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
-    path.resolve(__dirname, 'demo/index.tsx')
+    path.resolve(__dirname, 'index.tsx')
   ],
   output: {
     filename: 'main.js',
-    path: path.resolve(__dirname, 'demo')
+    path: path.resolve(__dirname)
   },
   module: {
     rules: [
@@ -43,8 +44,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: '${name}',
-      path: path.resolve(__dirname, 'demo'),
-      template: path.resolve(__dirname, 'demo/index.html'),
+      path: path.resolve(__dirname),
+      template: path.resolve(__dirname, 'index.html'),
       filename: 'index.html'
     }),
     new webpack.HotModuleReplacementPlugin(),
