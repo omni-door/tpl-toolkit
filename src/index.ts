@@ -1,9 +1,13 @@
 import path from 'path';
 import {
-  spinner,
   arr2str,
+  exec,
+  output_file,
   intersection,
   logInfo,
+  logErr,
+  logWarn,
+  logSuc,
   PKJTOOL,
   STYLE,
   STRATEGY,
@@ -38,13 +42,6 @@ import {
   TPLS_NEW_RETURE
 } from './templates';
 import { devDependencies } from './configs/dependencies';
-import {
-  exec,
-  logErr,
-  logWarn,
-  output_file,
-  logSuc
-} from '@omni-door/tpl-utils';
 
 const default_tpl_list = {
   babel: babelConfigJs,
@@ -107,16 +104,14 @@ async function init ({
   dependencies: dependencies_custom,
   devDependencies: devDependencies_custom,
   error = () => {
-    spinner.state('fail', 'SDK工具库项目初始化失败！(The SDK-Tool project initialization has been occured some error!)');
+    logErr('SDK工具库项目初始化失败！(The SDK-Tool project initialization has been occured some error!)');
     process.exit(1);
   },
-  success = () => spinner.state('succeed', 'SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
+  success = () => logSuc('SDK工具库项目初始化完成！(The SDK-Tool project initialization has been completed!)')
 }: InitOptions) {
-  spinner.color('green');
-  spinner.prefix('arrow3');
 
   // 模板解析
-  spinner.state('start', '模板解析中 (Parsing templates, please wait patiently)');
+  logInfo('模板解析中 (Parsing templates, please wait patiently)');
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
@@ -140,7 +135,7 @@ async function init ({
 
       (list[name] as TPLS_INITIAL_FN) = tplFactory as TPLS_INITIAL_FN;
     }
-    spinner.text('模板解析完成 (Parsing templates completed!)');
+    logInfo('模板解析完成 (Parsing templates completed!)');
   } catch (err_tpls) {
     logWarn(JSON.stringify(err_tpls));
     logWarn('生成自定义模板出错，将全部使用默认模板进行初始化！(The custom template generating occured error, all will be initializated with the default template!)');
@@ -149,7 +144,7 @@ async function init ({
   const project_type = 'toolkit';
 
   // 生成项目文件
-  spinner.text('项目文件生成中 (Generating files, please wait patiently)');
+  logInfo('项目文件生成中 (Generating files, please wait patiently)');
   const pathToFileContentMap = {
     // default files
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
@@ -183,10 +178,10 @@ async function init ({
       file_content: pathToFileContentMap[p]
     });
   }
-  spinner.text('项目文件生成完毕 (Generating files completed!)');
+  logInfo('项目文件生成完毕 (Generating files completed!)');
 
   // 项目依赖解析
-  spinner.text('项目依赖解析中 (Parsing dependencies, please wait patiently)');
+  logInfo('项目依赖解析中 (Parsing dependencies, please wait patiently)');
   let installCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add --cwd ${initPath}` : `${pkgtool} install --save --prefix ${initPath}`;
   let installDevCliPrefix = pkgtool === 'yarn' ? `${pkgtool} add -D --cwd ${initPath}` : `${pkgtool} install --save-dev --prefix ${initPath}`;
   if (pkgtool === 'cnpm' && initPath !== process.cwd()) {
@@ -265,10 +260,10 @@ async function init ({
   const installCommitlintDevCli = commitlintDepStr ? `${installDevCliPrefix} ${commitlintDepStr}` : '';
   const installServerDevCli = devServerDepStr ? `${installDevCliPrefix} ${devServerDepStr}` : '';
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
-  spinner.text('项目依赖解析完成 (Parsing dependencies completed)');
+  logInfo('项目依赖解析完成 (Parsing dependencies completed)');
 
   // 项目依赖安装
-  spinner.text('项目依赖安装中 (Installing dependencies, please wait patiently)');
+  logInfo('项目依赖安装中 (Installing dependencies, please wait patiently)');
   exec([
     installCli,
     installDevCli,
