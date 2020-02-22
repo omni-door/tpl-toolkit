@@ -74,7 +74,7 @@ export default (config: {
   ${
     type_react && ts && strategy === 'stable'
       ? `"resolutions": {
-        "@types/react": '${type_react}'
+        "@types/react": "${type_react}"
       },`
       : ''
   }
