@@ -149,7 +149,7 @@ async function init ({
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
     'package.json': tpl.pkj({ name, ts, test, eslint, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
     '.gitignore': tpl.gitignore(),
-    [`src/tookit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
+    [`src/toolkit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
     // tsconfig
     'tsconfig.json': ts && tpl.tsconfig(),
     // lint files
