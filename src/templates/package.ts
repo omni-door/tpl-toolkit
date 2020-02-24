@@ -64,9 +64,8 @@ export default (config: {
           }
         },
         "lint-staged": {
-          ${eslint ? `"src/**/*.{js,jsx,ts,tsx,css}": [
-            "npm run lint:es_fix",
-            "git add"
+          ${eslint ? `"src/**/*.{js,jsx,ts,tsx}": [
+            "npm run lint:es_fix"
           ]` : ''}
         },`
       : ''
