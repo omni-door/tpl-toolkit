@@ -88,8 +88,8 @@ export type InitOptions = {
   tpls?: (tpls: TPLS_INITIAL) => TPLS_INITIAL_RETURE;
   dependencies?: (dependecies_default: string[]) => ResultOfDependencies;
   devDependencies?: (devDependecies_default: string[]) => ResultOfDependencies;
-  error?: () => any;
-  success?: () => any;
+  error?: (err: any) => any;
+  success?: (results?: any[]) => any;
 };
 
 async function init ({
@@ -278,9 +278,9 @@ async function init ({
     installCommitlintDevCli,
     installServerDevCli,
     installCustomDevCli
-  ], () => {
+  ], res => {
     logTime('安装依赖', true);
-    success();
+    success(res);
   }, error, isSlient);
 }
 
