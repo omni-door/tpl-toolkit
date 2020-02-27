@@ -89,7 +89,7 @@ export type InitOptions = {
   dependencies?: (dependecies_default: string[]) => ResultOfDependencies;
   devDependencies?: (devDependecies_default: string[]) => ResultOfDependencies;
   error?: (err: any) => any;
-  success?: (results?: any[]) => any;
+  success?: (results: any[]) => any;
 };
 
 async function init ({
