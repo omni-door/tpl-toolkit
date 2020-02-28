@@ -50,6 +50,6 @@ export const devDependencies = {
   'karma-safari-launcher': '1.0.0',
   'karma-typescript': '4.1.1',
   'karma-webpack': '4.0.2',
-  'react': '16.12.0',
-  'react-dom': '16.12.0'
+  'react': '^16.12.0',
+  'react-dom': '^16.12.0'
 };
