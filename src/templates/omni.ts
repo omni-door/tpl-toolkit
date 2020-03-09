@@ -48,7 +48,7 @@ module.exports = {
     // 务必使用绝对路径 (must be a absolute path)
     esmDir: path.resolve('es'),
 
-    // 打包工具，支持 tsc、rollup、webpack (build tool, support tsc, rollup and webpack)
+    // 打包工具，支持 tsc、rollup (build tool, support tsc and rollup)
     tool: '${build}', 
 
     // 构建阶段的自定义配置回调 (The callback will be call in the build-process)
