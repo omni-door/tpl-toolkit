@@ -9,7 +9,7 @@ export default (config: {
   strategy: STRATEGY;
   type_react?: string;
 }) => {
-  const { name, ts, test, eslint, commitlint, strategy, type_react } = config;
+  const { name, ts, test, eslint, commitlint } = config;
 
   const lowerName = name.toLowerCase();
   return `{
