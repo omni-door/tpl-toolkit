@@ -9,10 +9,6 @@ src
 *test*
 node_modules
 .omni_cache
-.storybook
-.docz
-demo
-server
 
 # config files
 .eslintignore
@@ -21,6 +17,8 @@ server
 *.config.js
 *.conf.js
 tsconfig.json
+.umirc*
+.env
 
 _config.yml
 .nyc_output
@@ -28,7 +26,6 @@ _config.yml
 coverage
 .nycrc
 mocha.opts
-doczrc.js
 
 yarn.lock
 package-lock.json
