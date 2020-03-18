@@ -35,6 +35,7 @@ import {
   component_index,
   component_readme,
   component_test,
+  umirc,
   TPLS_INITIAL,
   TPLS_INITIAL_FN,
   TPLS_INITIAL_RETURE,
@@ -66,7 +67,8 @@ const default_tpl_list = {
   demo_webpack_dev,
   component_index,
   component_readme,
-  component_test
+  component_test,
+  umirc
 };
 
 export type ResultOfDependencies = string[] | { add?: string[]; remove?: string[]; };
@@ -166,6 +168,7 @@ async function init ({
     // ReadMe
     'README.md': tpl.readme({ name, configFileName }),
     // demo files
+    [`.umirc.${ts ? 'ts' : 'js'}`]: tpl.umirc(),
     // [`demo/index.${ts ? 'tsx' : 'jsx'}`]: tpl.demo_index_react({ ts }),
     // 'demo/index.html': tpl.demo_html({ name }),
     // 'demo/webpack.config.js': tpl.demo_webpack_dev({ name, ts }),
