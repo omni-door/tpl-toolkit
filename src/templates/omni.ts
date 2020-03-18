@@ -17,21 +17,6 @@ const path = require('path');
 module.exports = {
   type: '${project_type}', // 项目类型，请勿任意变动 (project type, please don't modify)
 
-  dev: {
-    webpack: require(path.resolve('demo/webpack.config.js')), // 开发服务端webpack配置 (dev-server webpack configuration)
-    proxy:  [
-      // {
-      //   route: '/api',
-      //   config: {
-      //     target: 'http://www.api.com/api',
-      //     changeOrigin: true
-      //   }
-      // }
-    ], // 开发服务代理配置 (dev-server proxy config)
-    port: 6200, // 开发服务端口号 (dev-server port)
-    logLevel: 'error' // 开发服务日志输出等级，可选 'debug'、'info'、'warn'、'error'、'silent' (The log-level which dev-server will apply)
-  },
-
   build: {
     // 构建完成后是否自动发布 (auto release project after build success)
     autoRelease: false,
