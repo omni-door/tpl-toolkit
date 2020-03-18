@@ -18,6 +18,7 @@ import component_index from './new/index';
 import component_readme from './new/readme';
 import component_test from './new/test';
 import umirc from './umirc';
+import env from './env';
 
 export { default as babel } from './babel';
 export { default as commitlint } from './commitlint';
@@ -39,6 +40,7 @@ export { default as component_index } from './new/index';
 export { default as component_readme } from './new/readme';
 export { default as component_test } from './new/test';
 export { default as umirc } from './umirc';
+export { default as env } from './env';
 
 const tpls = {
   babel,
@@ -60,7 +62,8 @@ const tpls = {
   component_index,
   component_readme,
   component_test,
-  umirc
+  umirc,
+  env
 };
 
 type TPLS = {
