@@ -166,9 +166,9 @@ async function init ({
     // ReadMe
     'README.md': tpl.readme({ name, configFileName }),
     // demo files
-    [`demo/index.${ts ? 'tsx' : 'jsx'}`]: tpl.demo_index_react({ ts }),
-    'demo/index.html': tpl.demo_html({ name }),
-    'demo/webpack.config.js': tpl.demo_webpack_dev({ name, ts }),
+    // [`demo/index.${ts ? 'tsx' : 'jsx'}`]: tpl.demo_index_react({ ts }),
+    // 'demo/index.html': tpl.demo_html({ name }),
+    // 'demo/webpack.config.js': tpl.demo_webpack_dev({ name, ts }),
     // test files
     'mocha.opts': test && tpl.mocha({ ts }),
     'karma.conf.js': test && tpl.karma({ ts }),
@@ -332,7 +332,7 @@ export function newTpl ({
   const tpl = { ...default_tpl_list, ...custom_tpl_list };
   // component tpl
   const content_index = tpl.component_index({ componentName });
-  const content_readme = md === 'md' && tpl.component_readme({ componentName });
+  const content_readme = md === 'md' && tpl.component_readme({ componentName, ts });
   const content_test = test && tpl.component_test({ componentName });
 
   const pathToFileContentMap = {

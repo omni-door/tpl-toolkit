@@ -20,8 +20,8 @@ export default (config: {
   "module": "es/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "start": "omni dev",
-    "dev": "omni dev",
+    "start": "dumi dev",
+    "dev": "dumi dev",
     ${
       test
         ? `"test": "karma start --single-run && npm run test:mocha",

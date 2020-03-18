@@ -12,6 +12,7 @@ export const devDependencies = {
   'babel-loader': '8.0.6',
   'del': '5.1.0',
   'detect-port': '1.3.0',
+  "dumi": "latest",
   'eslint': '6.8.0',
   'express': '4.17.1',
   'html-webpack-plugin': '3.2.0',
