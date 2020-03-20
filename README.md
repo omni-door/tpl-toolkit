@@ -59,3 +59,7 @@ The JS-SDK project template for @omni-door
 - karma => karma.conf.js
 
 - mocha => mocha.opts
+
+- umirc => .umirc.(js|ts)
+
+- env => .env
