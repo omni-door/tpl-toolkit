@@ -6,6 +6,7 @@ import gitignore from './gitignore';
 import npmignore from './npmignore';
 import omni from './omni';
 import pkj from './package';
+import prettier from './prettier';
 import readme from './readme';
 import tsconfig from './tsconfig';
 import indexTpl from './indexTpl';
@@ -28,6 +29,7 @@ export { default as gitignore } from './gitignore';
 export { default as npmignore } from './npmignore';
 export { default as omni } from './omni';
 export { default as pkj } from './package';
+export { default as prettier } from './prettier';
 export { default as readme } from './readme';
 export { default as tsconfig } from './tsconfig';
 export { default as indexTpl } from './indexTpl';
@@ -51,6 +53,7 @@ const tpls = {
   npmignore,
   omni,
   pkj,
+  prettier,
   readme,
   tsconfig,
   demo_index_react,

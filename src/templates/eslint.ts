@@ -1,7 +1,8 @@
 export default function (config: {
   ts: boolean;
+  prettier: boolean;
 }) {
-  const { ts } = config;
+  const { ts, prettier } = config;
 
   return `'use strict';
 
@@ -12,7 +13,8 @@ module.exports = {
   },
   "extends": [
     ${ts ? `"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended"` : '"eslint:recommended"'}
+		"plugin:@typescript-eslint/eslint-recommended"` : '"eslint:recommended"'}${prettier ? `,
+    "plugin:prettier/recommended"` : ''}
 	],
   "globals": {
     "Atomics": "readonly",
@@ -28,7 +30,8 @@ module.exports = {
     "project": "./tsconfig.json"
   },
   "plugins": [
-    ${ts ? '"@typescript-eslint"' : ''}
+    ${ts ? `"@typescript-eslint"${prettier ? ',' : ''}` : ''}
+    ${prettier ? '"plugin:prettier/recommended"' : ''}
   ],
   "rules": {
     ${
@@ -54,7 +57,17 @@ module.exports = {
     "no-unused-vars": ["off"],
     "no-extra-semi": ["warn"],
     "quotes": ["error", "single"],
-    "linebreak-style": ["warn", "unix"]
+    "linebreak-style": ["warn", "unix"]${prettier ? `,
+    "prettier/prettier": [
+      "warn",
+      {
+        "printWidth": 50,
+        "tabWidth": 2,
+        "singleQuote": true,
+        "jsxSingleQuote": true,
+        "semi": true
+      }
+    ]` : ''}
   }
 };`;
 }

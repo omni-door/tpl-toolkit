@@ -24,6 +24,7 @@ import {
   npmignore,
   omni,
   pkj,
+  prettier,
   readme,
   tsconfig,
   karma,
@@ -58,6 +59,7 @@ const default_tpl_list = {
   npmignore,
   omni,
   pkj,
+  prettier,
   readme,
   tsconfig,
   karma,
@@ -84,6 +86,7 @@ export type InitOptions = {
   ts: boolean;
   test: boolean;
   eslint: boolean;
+  prettier: boolean;
   commitlint: boolean;
   style: STYLE;
   stylelint: boolean;
@@ -105,6 +108,7 @@ async function init ({
   ts,
   test,
   eslint,
+  prettier,
   commitlint,
   tpls,
   pkgtool = 'yarn',
@@ -155,15 +159,16 @@ async function init ({
   const pathToFileContentMap = {
     // default files
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
-    'package.json': tpl.pkj({ name, ts, test, eslint, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
+    'package.json': tpl.pkj({ name, ts, test, eslint, prettier, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
     '.gitignore': tpl.gitignore(),
     '.npmignore': tpl.npmignore(),
     [`src/toolkit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
     // tsconfig
     'tsconfig.json': ts && tpl.tsconfig(),
     // lint files
-    '.eslintrc.js': eslint && tpl.eslint({ ts }),
+    '.eslintrc.js': eslint && tpl.eslint({ ts, prettier }),
     '.eslintignore': eslint && tpl.eslintignore(),
+    'prettier.config.js': prettier && tpl.prettier(),
     'commitlint.config.js': commitlint && tpl.commitlint({ name }),
     // build files
     'babel.config.js': tpl.babel({ ts }),
@@ -223,6 +228,8 @@ async function init ({
     testDepArr,
     eslintDepArr,
     eslintDepStr,
+    prettierDepArr,
+    prettierDepStr,
     commitlintDepArr,
     commitlintDepStr,
     devServerDepArr,
@@ -231,6 +238,7 @@ async function init ({
   } = devDependencies(strategy, {
     ts,
     eslint,
+    prettier,
     commitlint,
     test
   });
@@ -249,6 +257,7 @@ async function init ({
         tsDepArr = [ ...intersection(tsDepArr, tsDepArr.filter(v => v !== item_rm)) ];
         testDepArr = [ ...intersection(testDepArr, testDepArr.filter(v => v !== item_rm)) ];
         eslintDepArr = [ ...intersection(eslintDepArr, eslintDepArr.filter(v => v !== item_rm)) ];
+        prettierDepArr = [ ...intersection(prettierDepArr, prettierDepArr.filter(v => v !== item_rm)) ];
         commitlintDepArr = [ ...intersection(commitlintDepArr, commitlintDepArr.filter(v => v !== item_rm)) ];
         devServerDepArr = [ ...intersection(devServerDepArr, devServerDepArr.filter(v => v !== item_rm)) ];
       }
@@ -257,6 +266,7 @@ async function init ({
       tsDepStr = arr2str(tsDepArr);
       testDepStr = arr2str(testDepArr);
       eslintDepStr = arr2str(eslintDepArr);
+      prettierDepStr = arr2str(prettierDepArr);
       commitlintDepStr = arr2str(commitlintDepArr);
       devServerDepStr = arr2str(devServerDepArr);
       customDepStr = arr2str(add);
@@ -268,6 +278,7 @@ async function init ({
   const installTsDevCli = tsDepStr ? `${installDevCliPrefix} ${tsDepStr}` : '';
   const installTestDevCli = testDepStr ? `${installDevCliPrefix} ${testDepStr}` : '';
   const installEslintDevCli = eslintDepStr ? `${installDevCliPrefix} ${eslintDepStr}` : '';
+  const installPrettierDevCli = prettierDepStr ? `${installDevCliPrefix} ${prettierDepStr}` : '';
   const installCommitlintDevCli = commitlintDepStr ? `${installDevCliPrefix} ${commitlintDepStr}` : '';
   const installServerDevCli = devServerDepStr ? `${installDevCliPrefix} ${devServerDepStr}` : '';
   const installCustomDevCli = customDepStr ? `${installDevCliPrefix} ${customDepStr}` : '';
@@ -282,6 +293,7 @@ async function init ({
     installTsDevCli,
     installTestDevCli,
     installEslintDevCli,
+    installPrettierDevCli,
     installCommitlintDevCli,
     installServerDevCli,
     installCustomDevCli

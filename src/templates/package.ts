@@ -5,11 +5,20 @@ export default (config: {
   ts: boolean;
   test: boolean;
   eslint: boolean;
+  prettier: boolean;
   commitlint: boolean;
   strategy: STRATEGY;
   type_react?: string;
 }) => {
-  const { name, ts, test, eslint, commitlint } = config;
+  const { name, ts, test, eslint, prettier, commitlint } = config;
+  const script_eslint = eslint && 'npm run lint:es';
+  const script_prettier = prettier && 'npm run lint:prettier';
+
+  const script_eslint_fix = eslint && 'npm run lint:es_fix';
+  const script_prettier_fix = prettier && 'npm run lint:prettier_fix';
+
+  const script_lint = `${script_prettier ? `${script_prettier}${script_eslint ? ' && ' : ''}` : ''}${script_eslint ? `${script_eslint}` : ''}`.trim();
+  const script_lint_fix = `${script_prettier_fix ? `${script_prettier_fix}${script_eslint_fix ? ' && ' : ''}` : ''}${script_eslint_fix ? `${script_eslint_fix}` : ''}`.trim();
 
   const lowerName = name.toLowerCase();
   return `{
@@ -31,12 +40,14 @@ export default (config: {
         : ''
     }
     ${
-      eslint
-        ? `"lint": "npm run lint:es",
-        "lint:fix": "npm run lint:es_fix",
-        "lint:es": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'}",
-        "lint:es_fix": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'} --fix",`
-        : ''
+      script_lint
+        ? `"lint": "${script_lint}",
+          "lint:fix": "${script_lint_fix}",
+          ${eslint ? `"lint:es": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'}",
+          "lint:es_fix": "eslint src/ --ext .${ts ? 'ts' : 'js'} --ext .${ts ? 'tsx' : 'jsx'} --fix",` : ''}
+          ${prettier ? `"lint:prettier": "prettier --check src/",
+          "lint:prettier_fix": "prettier --write src/",` : ''}`
+      : ''
     }
     ${
       commitlint
@@ -53,9 +64,9 @@ export default (config: {
           "hooks": {
             "pre-commit": "lint-staged",
             "pre-push": ${
-    eslint && test
+    (eslint || prettier) && test
       ? '"npm run lint && npm run test"'
-      : eslint
+      : eslint || prettier
         ? '"npm run lint"'
         : test
           ? '"npm run test"'
