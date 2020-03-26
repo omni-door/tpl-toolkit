@@ -1,5 +1,3 @@
-import { STRATEGY } from '@omni-door/tpl-utils';
-
 export default (config: {
   name: string;
   ts: boolean;
@@ -7,8 +5,6 @@ export default (config: {
   eslint: boolean;
   prettier: boolean;
   commitlint: boolean;
-  strategy: STRATEGY;
-  type_react?: string;
 }) => {
   const { name, ts, test, eslint, prettier, commitlint } = config;
   const script_eslint = eslint && 'npm run lint:es';

@@ -12,9 +12,6 @@ import tsconfig from './tsconfig';
 import indexTpl from './indexTpl';
 import karma from './karma';
 import mocha from './mocha';
-import demo_index_react from './demo/index_react';
-import demo_html from './demo/html';
-import demo_webpack_dev from './demo/webpack_dev';
 import component_index from './new/index';
 import component_readme from './new/readme';
 import component_test from './new/test';
@@ -35,9 +32,6 @@ export { default as tsconfig } from './tsconfig';
 export { default as indexTpl } from './indexTpl';
 export { default as karma } from './karma';
 export { default as mocha } from './mocha';
-export { default as demo_index_react } from './demo/index_react';
-export { default as demo_html } from './demo/html';
-export { default as demo_webpack_dev } from './demo/webpack_dev';
 export { default as component_index } from './new/index';
 export { default as component_readme } from './new/readme';
 export { default as component_test } from './new/test';
@@ -56,9 +50,6 @@ const tpls = {
   prettier,
   readme,
   tsconfig,
-  demo_index_react,
-  demo_html,
-  demo_webpack_dev,
   indexTpl,
   karma,
   mocha,

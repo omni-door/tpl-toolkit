@@ -30,9 +30,6 @@ import {
   karma,
   mocha,
   indexTpl,
-  demo_html,
-  demo_index_react,
-  demo_webpack_dev,
   component_index,
   component_readme,
   component_test,
@@ -46,7 +43,6 @@ import {
   TPLS_NEW_RETURE
 } from './templates';
 import { devDependencies } from './configs/dependencies';
-import { devDependencies as devDependencyMap } from './configs/dependencies_stable_map';
 export { setBrand, setLogo } from '@omni-door/tpl-utils';
 export { TPLS_INITIAL, TPLS_INITIAL_FN, TPLS_INITIAL_RETURE, TPLS_NEW, TPLS_NEW_FN, TPLS_NEW_RETURE } from './templates';
 
@@ -65,9 +61,6 @@ const default_tpl_list = {
   karma,
   mocha,
   indexTpl,
-  demo_html,
-  demo_index_react,
-  demo_webpack_dev,
   component_index,
   component_readme,
   component_test,
@@ -159,7 +152,7 @@ async function init ({
   const pathToFileContentMap = {
     // default files
     [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
-    'package.json': tpl.pkj({ name, ts, test, eslint, prettier, commitlint, strategy, type_react: devDependencyMap['@types/react'] }),
+    'package.json': tpl.pkj({ name, ts, test, eslint, prettier, commitlint }),
     '.gitignore': tpl.gitignore(),
     '.npmignore': tpl.npmignore(),
     [`src/toolkit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
@@ -174,12 +167,9 @@ async function init ({
     'babel.config.js': tpl.babel({ ts }),
     // ReadMe
     'README.md': tpl.readme({ name, configFileName }),
-    // demo files
+    // dumi-config files
     [`.umirc.${ts ? 'ts' : 'js'}`]: tpl.umirc(),
     '.env': tpl.env(),
-    // [`demo/index.${ts ? 'tsx' : 'jsx'}`]: tpl.demo_index_react({ ts }),
-    // 'demo/index.html': tpl.demo_html({ name }),
-    // 'demo/webpack.config.js': tpl.demo_webpack_dev({ name, ts }),
     // test files
     'mocha.opts': test && tpl.mocha({ ts }),
     'karma.conf.js': test && tpl.karma({ ts }),

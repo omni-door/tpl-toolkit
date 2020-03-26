@@ -20,27 +20,6 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
     commitlint
   } = config;
 
-  // const reactDependencies = [
-  //   dependency('react'),
-  //   dependency('react-dom')
-  // ];
-
-  // const loaderDependencies = [
-  //   dependency('babel-loader')
-  // ];
-
-  // const babelDependencies = [
-  //   dependency('@babel/core'),
-  //   dependency('@babel/preset-env'),
-  //   dependency('@babel/preset-react'),
-  //   ts ? dependency('@babel/preset-typescript') : ''
-  // ];
-
-  // const pluginDependencies = [
-  //   dependency('html-webpack-plugin'),
-  //   dependency('webpackbar')
-  // ];
-
   const buildDependencies = [
     dependency('rollup'),
     dependency('rollup-plugin-node-resolve'),
@@ -74,9 +53,6 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
   ] : [];
 
   const tsDependencies = ts ? [
-    // dependency('@types/react'),
-    // dependency('@types/react-dom'),
-    // dependency('@types/webpack-env'),
     dependency('typescript'),
     dependency('ts-node'),
     dependency('ts-loader'),
@@ -100,22 +76,6 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
     dependency('husky'),
     dependency('lint-staged')
   ] : [];
-
-  // const devServerDependencies = [
-  //   dependency('open'),
-  //   dependency('ip'),
-  //   dependency('detect-port'),
-  //   dependency('express'),
-  //   dependency('webpack'),
-  //   dependency('webpack-cli'),
-  //   dependency('webpack-dev-middleware'),
-  //   dependency('webpack-hot-middleware'),
-  //   dependency('http-proxy-middleware'),
-  //   ...loaderDependencies,
-  //   ...babelDependencies,
-  //   ...pluginDependencies,
-  //   ...reactDependencies
-  // ];
 
   const dumiDependencies = [
     dependency('dumi')
