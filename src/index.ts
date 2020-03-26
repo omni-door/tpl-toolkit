@@ -151,7 +151,7 @@ async function init ({
   logTime('生成文件');
   const pathToFileContentMap = {
     // default files
-    [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, mdx: false }),
+    [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, prettier }),
     'package.json': tpl.pkj({ name, ts, test, eslint, prettier, commitlint }),
     '.gitignore': tpl.gitignore(),
     '.npmignore': tpl.npmignore(),
