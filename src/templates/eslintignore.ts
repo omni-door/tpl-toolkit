@@ -12,6 +12,7 @@ node_modules/
 .out/
 **/__test__/
 **/__stories__/
+src/.umi
 
 doczrc.js
 .eslintrc.js

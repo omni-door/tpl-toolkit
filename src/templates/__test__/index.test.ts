@@ -12,6 +12,7 @@ import tpl_npmignore from '../npmignore';
 import tpl_omni from '../omni';
 import tpl_package from '../package';
 import tpl_prettier from '../prettier';
+import tpl_prettierignore from '../prettierignore';
 import tpl_readme from '../readme';
 import tpl_tsconfig from '../tsconfig';
 
@@ -84,6 +85,12 @@ describe('tpl_package template test', function () {
 describe('tpl_prettier template test', function () {
   it('type checking', function () {
     expect(tpl_prettier).to.be.a('function');
+  });
+});
+
+describe('tpl_prettierignore template test', function () {
+  it('type checking', function () {
+    expect(tpl_prettierignore).to.be.a('function');
   });
 });
 

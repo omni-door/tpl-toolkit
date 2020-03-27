@@ -62,6 +62,8 @@ export default function () {
     "node_modules",
     "**/__test__/",
     "**/__stories__/",
+    "src/.umi",
+    ".umirc.*",
     "configs/",
     "lib/",
     "es/",

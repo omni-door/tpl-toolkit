@@ -25,6 +25,7 @@ import {
   omni,
   pkj,
   prettier,
+  prettierignore,
   readme,
   tsconfig,
   karma,
@@ -56,6 +57,7 @@ const default_tpl_list = {
   omni,
   pkj,
   prettier,
+  prettierignore,
   readme,
   tsconfig,
   karma,
@@ -162,6 +164,7 @@ async function init ({
     '.eslintrc.js': eslint && tpl.eslint({ ts, prettier }),
     '.eslintignore': eslint && tpl.eslintignore(),
     'prettier.config.js': prettier && tpl.prettier(),
+    '.prettierignore': prettier && tpl.prettierignore(),
     'commitlint.config.js': commitlint && tpl.commitlint({ name }),
     // build files
     'babel.config.js': tpl.babel({ ts }),

@@ -31,7 +31,7 @@ module.exports = {
   },
   "plugins": [
     ${ts ? `"@typescript-eslint"${prettier ? ',' : ''}` : ''}
-    ${prettier ? '"plugin:prettier/recommended"' : ''}
+    ${prettier ? '"prettier"' : ''}
   ],
   "rules": {
     ${
