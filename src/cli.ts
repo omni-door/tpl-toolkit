@@ -1,4 +1,4 @@
-import { BUILD, STRATEGY, STYLE, PKJTOOL } from '@omni-door/tpl-utils';
+import { BUILD, STRATEGY, STYLE, PKJTOOL } from '@omni-door/utils';
 import { parse } from 'path';
 import init, { newTpl } from './index';
 const args = process.argv.slice(2);

@@ -14,7 +14,7 @@ import {
   STRATEGY,
   BUILD,
   MARKDOWN
-} from '@omni-door/tpl-utils';
+} from '@omni-door/utils';
 import {
   babel,
   commitlint,
@@ -44,7 +44,7 @@ import {
   TPLS_NEW_RETURE
 } from './templates';
 import { devDependencies } from './configs/dependencies';
-export { setBrand, setLogo } from '@omni-door/tpl-utils';
+export { setBrand, setLogo } from '@omni-door/utils';
 export { TPLS_INITIAL, TPLS_INITIAL_FN, TPLS_INITIAL_RETURE, TPLS_NEW, TPLS_NEW_FN, TPLS_NEW_RETURE } from './templates';
 
 const default_tpl_list = {
