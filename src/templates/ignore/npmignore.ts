@@ -1,5 +1,7 @@
-export default function () {
-  return `.idea
+import { tpl_engine_init } from '@omni-door/utils';
+
+const tpl = 
+`\`.idea
 .DS_Store
 *~
 ~*
@@ -32,5 +34,11 @@ package-lock.json
 
 # log files
 *.log
-*.log.*`;
-}
+*.log.*
+\``;
+
+export const tpl_ignore_npm = {
+  tpl 
+};
+
+export default tpl_engine_init(tpl_ignore_npm, 'tpl');

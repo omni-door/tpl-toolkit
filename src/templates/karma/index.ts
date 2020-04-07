@@ -1,10 +1,7 @@
-export default function (config: {
-  ts: boolean;
-}) {
-  const { ts } = config;
-  const ext = ts ? 'ts' : 'js';
+import { tpl_engine_init } from '@omni-door/utils';
 
-  return `'use strict';
+const tpl = 
+`\`\${use_strict}
 
 module.exports = function(config) {
   config.set({
@@ -28,18 +25,18 @@ module.exports = function(config) {
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
     preprocessors: {
-      'src/**/*.${ext}': ['webpack'],
-      'src/**/*[!test].${ext}': ['coverage']
+      'src/**/*.\${ts ? 'ts' : 'js'}': ['webpack'],
+      'src/**/*[!test].\${ts ? 'ts' : 'js'}': ['coverage']
     },
 
 
     // list of files / patterns to load in the browser
     files: [
-      'src/**/*.${ext}'
+      'src/**/*.\${ts ? 'ts' : 'js'}'
     ],
 
 
-    ${ts ? `// list of files / patterns to exclude
+    \${ts ? \`// list of files / patterns to exclude
     exclude: [
       '**/*.d.ts'
     ],
@@ -47,7 +44,7 @@ module.exports = function(config) {
 
     mime: {
       'text/x-typescript': ['ts']
-    },` : ''}
+    },\` : ''}
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
@@ -69,9 +66,9 @@ module.exports = function(config) {
         filename: '[chunkhash:8].js',
       },
       resolve: {
-        extensions: ['${ts ? '.ts' : ''}', '.js', '.json']
+        extensions: ['\${ts ? '.ts' : ''}', '.js', '.json']
       },
-      ${ts ? `module: {
+      \${ts ? \`module: {
         rules: [
           {
             test: /\.ts$/,
@@ -92,7 +89,7 @@ module.exports = function(config) {
           }
         ]
       }
-    },` : ''}
+    },\` : ''}
       
 
     // web server port
@@ -125,6 +122,11 @@ module.exports = function(config) {
     // how many browser should be started simultaneous
     concurrency: Infinity
   })
-};`;
-}
+};
+\``
 
+export const tpl_karma = {
+  tpl
+};
+
+export default tpl_engine_init(tpl_karma, 'tpl');

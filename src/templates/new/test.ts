@@ -1,17 +1,20 @@
-export default function (config: {
-  componentName: string;
-}) {
-  const { componentName } = config;
+import { tpl_engine_new } from '@omni-door/utils';
 
-  return `import 'mocha'
+const tpl = 
+`\`import 'mocha'
 import { expect } from 'chai'
-import ${componentName} from '../'
+import \${componentName} from '../'
 
-describe("${componentName} test", function () {
-  it('${componentName} is a function', function () {
-    expect(${componentName}).to.be.a('function')
+describe("\${componentName} test", function () {
+  it('\${componentName} is a function', function () {
+    expect(\${componentName}).to.be.a('function')
   })
-})`;
+});
+\``
 
-}
+export const tpl_new_test = {
+  tpl
+};
+
+export default tpl_engine_new(tpl_new_test, 'tpl');
 

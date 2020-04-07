@@ -36,12 +36,32 @@ import {
   component_test,
   umirc,
   env,
-  TPLS_INITIAL,
+  TPLS_ORIGIN_INITIAL,
   TPLS_INITIAL_FN,
   TPLS_INITIAL_RETURE,
-  TPLS_NEW,
+  TPLS_ORIGIN_NEW,
   TPLS_NEW_FN,
-  TPLS_NEW_RETURE
+  TPLS_NEW_RETURE,
+  tpl_babel,
+  tpl_commitlint,
+  tpl_eslint,
+  tpl_ignore_eslint,
+  tpl_ignore_git,
+  tpl_ignore_npm,
+  tpl_new_index,
+  tpl_new_readme,
+  tpl_new_test,
+  tpl_omni,
+  tpl_package,
+  tpl_prettier,
+  tpl_readme,
+  tpl_src_index,
+  tpl_tsconfig,
+  tpl_ignore_prettier,
+  tpl_karma,
+  tpl_mocha,
+  tpl_umirc,
+  tpl_env
 } from './templates';
 import { devDependencies } from './configs/dependencies';
 export { setBrand, setLogo } from '@omni-door/utils';
@@ -63,11 +83,31 @@ const default_tpl_list = {
   karma,
   mocha,
   indexTpl,
-  component_index,
-  component_readme,
-  component_test,
   umirc,
   env
+};
+
+const origin_tpl_list = {
+  tpl_babel,
+  tpl_commitlint,
+  tpl_eslint,
+  tpl_ignore_eslint,
+  tpl_ignore_git,
+  tpl_ignore_npm,
+  tpl_new_index,
+  tpl_new_readme,
+  tpl_new_test,
+  tpl_omni,
+  tpl_package,
+  tpl_prettier,
+  tpl_readme,
+  tpl_src_index,
+  tpl_tsconfig,
+  tpl_ignore_prettier,
+  tpl_karma,
+  tpl_mocha,
+  tpl_umirc,
+  tpl_env
 };
 
 export type ResultOfDependencies = string[] | { add?: string[]; remove?: string[]; };
@@ -87,7 +127,7 @@ export type InitOptions = {
   stylelint: boolean;
   pkgtool?: PKJTOOL;
   isSlient?: boolean;
-  tpls?: (tpls: TPLS_INITIAL) => TPLS_INITIAL_RETURE;
+  tpls?: (tpls: TPLS_ORIGIN_INITIAL) => TPLS_INITIAL_RETURE;
   dependencies?: (dependecies_default: string[]) => ResultOfDependencies;
   devDependencies?: (devDependecies_default: string[]) => ResultOfDependencies;
   error?: (err: any) => any;
@@ -97,7 +137,7 @@ export type InitOptions = {
 async function init ({
   build = 'rollup',
   strategy = 'stable',
-  projectName: name,
+  projectName: project_name,
   initPath,
   configFileName = 'omni.config.js',
   ts,
@@ -121,7 +161,7 @@ async function init ({
   let custom_tpl_list = {};
   try {
     custom_tpl_list = typeof tpls === 'function'
-      ? tpls(default_tpl_list)
+      ? tpls(origin_tpl_list)
       : custom_tpl_list;
 
     for (const tpl_name in custom_tpl_list) {
@@ -146,37 +186,38 @@ async function init ({
     logWarn('生成自定义模板出错，将全部使用默认模板进行初始化！(The custom template generating occured error, all will be initializated with the default template!)');
   }
   const tpl = { ...default_tpl_list, ...custom_tpl_list };
-  const project_type = 'toolkit';
+  const project_type = 'toolkit' as 'toolkit';
   logTime('模板解析', true);
 
   // 生成项目文件
   logTime('生成文件');
+  const params = { project_type, project_name, ts, test, eslint, prettier, commitlint, style: ('' as any), stylelint: false, strategy, configFileName };
   const pathToFileContentMap = {
     // default files
-    [`${configFileName}`]: tpl.omni({ project_type, build, ts, test, eslint, commitlint, prettier }),
-    'package.json': tpl.pkj({ name, ts, test, eslint, prettier, commitlint }),
-    '.gitignore': tpl.gitignore(),
-    '.npmignore': tpl.npmignore(),
-    [`src/toolkit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(),
+    [`${configFileName}`]: tpl.omni(build)(params),
+    'package.json': tpl.pkj(params),
+    '.gitignore': tpl.gitignore(params),
+    '.npmignore': tpl.npmignore(params),
+    [`src/toolkit/index.${ts ? 'ts' : 'js'}`]: tpl.indexTpl(params),
     // tsconfig
-    'tsconfig.json': ts && tpl.tsconfig(),
+    'tsconfig.json': ts && tpl.tsconfig(params),
     // lint files
-    '.eslintrc.js': eslint && tpl.eslint({ ts, prettier }),
-    '.eslintignore': eslint && tpl.eslintignore(),
-    'prettier.config.js': prettier && tpl.prettier(),
-    '.prettierignore': prettier && tpl.prettierignore(),
-    'commitlint.config.js': commitlint && tpl.commitlint({ name }),
+    '.eslintrc.js': eslint && tpl.eslint(params),
+    '.eslintignore': eslint && tpl.eslintignore(params),
+    'prettier.config.js': prettier && tpl.prettier(params),
+    '.prettierignore': prettier && tpl.prettierignore(params),
+    'commitlint.config.js': commitlint && tpl.commitlint(params),
     // build files
-    'babel.config.js': tpl.babel({ ts }),
+    'babel.config.js': tpl.babel(params),
     // ReadMe
-    'README.md': tpl.readme({ name, configFileName }),
+    'README.md': tpl.readme(params),
     // dumi-config files
-    [`.umirc.${ts ? 'ts' : 'js'}`]: tpl.umirc(),
-    '.env': tpl.env(),
+    [`.umirc.${ts ? 'ts' : 'js'}`]: tpl.umirc(params),
+    '.env': tpl.env(params),
     // test files
-    'mocha.opts': test && tpl.mocha({ ts }),
-    'karma.conf.js': test && tpl.karma({ ts }),
-  }
+    'mocha.opts': test && tpl.mocha(params),
+    'karma.conf.js': test && tpl.karma(params),
+  };
   /**
    * create files
    */
@@ -296,6 +337,18 @@ async function init ({
   }, error, isSlient);
 }
 
+const default_tpl_new_list = {
+  component_index,
+  component_readme,
+  component_test
+};
+
+const origin_tpl_new_list = {
+  tpl_new_index,
+  tpl_new_readme,
+  tpl_new_test
+};
+
 export function newTpl ({
   ts,
   test,
@@ -309,19 +362,19 @@ export function newTpl ({
   componentName: string;
   newPath: string;
   md: MARKDOWN;
-  tpls?: (tpls: TPLS_NEW) => TPLS_NEW_RETURE;
+  tpls?: (tpls: TPLS_ORIGIN_NEW) => TPLS_NEW_RETURE;
 }) {
   logTime('创建组件');
   logInfo(`开始创建 ${componentName} 组件 (Start create ${componentName} component)`);
-  let custom_tpl_list = {};
+  let custom_tpl_new_list = {};
   try {
-    custom_tpl_list = typeof tpls === 'function'
-      ? tpls(default_tpl_list)
-      : custom_tpl_list;
+    custom_tpl_new_list = typeof tpls === 'function'
+      ? tpls(origin_tpl_new_list)
+      : custom_tpl_new_list;
 
-    for (const tpl_name in custom_tpl_list) {
+    for (const tpl_name in custom_tpl_new_list) {
       const name = tpl_name as keyof TPLS_NEW_RETURE;
-      const list = custom_tpl_list as TPLS_NEW_RETURE;
+      const list = custom_tpl_new_list as TPLS_NEW_RETURE;
       const tpl = list[name];
       const tplFactory = (config: any) => {
         try {
@@ -331,7 +384,7 @@ export function newTpl ({
           logWarn(`自定义模板 [${name}] 解析出错，将使用默认模板进行创建组件！(The custom template [${name}] parsing occured error, the default template will be used for initialization!)`);    
         }
 
-        return default_tpl_list[name](config);
+        return default_tpl_new_list[name](config);
       };
 
       (list[name] as TPLS_NEW_FN) = tplFactory as TPLS_NEW_FN;
@@ -340,11 +393,18 @@ export function newTpl ({
     logWarn(JSON.stringify(err_tpls));
     logWarn('生成自定义模板出错，将全部使用默认模板进行创建组件！(The custom template generating occured error, all will be initializated with the default template!)');
   }
-  const tpl = { ...default_tpl_list, ...custom_tpl_list };
+  const tpl = { ...default_tpl_new_list, ...custom_tpl_new_list };
+  const params = {
+    ts,
+    test,
+    componentName,
+    style: '' as any,
+    md
+  };
   // component tpl
-  const content_index = tpl.component_index({ componentName });
-  const content_readme = md === 'md' && tpl.component_readme({ componentName, ts });
-  const content_test = test && tpl.component_test({ componentName });
+  const content_index = tpl.component_index(params);
+  const content_readme = md === 'md' && tpl.component_readme(params);
+  const content_test = test && tpl.component_test(params);
 
   const pathToFileContentMap = {
     [`index.${ts ? 'ts' : 'js'}`]: content_index,

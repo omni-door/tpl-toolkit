@@ -1,9 +1,7 @@
-export default function (config: {
-  name: string;
-}) {
-  const { name } = config;
+import { tpl_engine_init } from '@omni-door/utils';
 
-  return `'use strict';
+const tpl = 
+`\`\${use_strict}
 
 const Configuration = {
   formatter: '@commitlint/format',
@@ -13,7 +11,7 @@ const Configuration = {
   rules: {
     'type-enum': [2, 'always', [
       '[OMNI-DOOR]',
-      '[${name.toUpperCase()}]',
+      '[\${project_name.toUpperCase()}]',
       'feat',
       'feature',
       'fix',
@@ -45,5 +43,11 @@ const Configuration = {
   defaultIgnores: true
 };
 
-module.exports = Configuration;`;
-}
+module.exports = Configuration;
+\``
+
+export const tpl_commitlint = {
+  tpl
+};
+
+export default tpl_engine_init(tpl_commitlint, 'tpl');
