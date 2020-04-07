@@ -1,7 +1,7 @@
 import { tpl_engine_new } from '@omni-door/utils';
 
 const tpl = 
-`\`export function \${componentName} () {}
+`\`export function \${componentName}() {}
 
 export default \${componentName};
 \``

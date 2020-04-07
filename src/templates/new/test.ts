@@ -1,9 +1,9 @@
 import { tpl_engine_new } from '@omni-door/utils';
 
 const tpl = 
-`\`import 'mocha'
-import { expect } from 'chai'
-import \${componentName} from '../'
+`\`import 'mocha';
+import { expect } from 'chai';
+import \${componentName} from '../';
 
 describe("\${componentName} test", function () {
   it('\${componentName} is a function', function () {

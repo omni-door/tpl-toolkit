@@ -2,6 +2,7 @@ import { tpl_engine_init } from '@omni-door/utils';
 
 const tpl = 
 `\`src/.umi
+**/__test__/
 \``;
 
 export const tpl_ignore_prettier = {
