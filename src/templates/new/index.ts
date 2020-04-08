@@ -4,7 +4,7 @@ const tpl =
 `\`export function \${componentName}() {}
 
 export default \${componentName};
-\``
+\``;
 
 export const tpl_new_index = {
   tpl

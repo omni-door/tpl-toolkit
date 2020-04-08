@@ -10,7 +10,7 @@ describe("\${componentName} test", function () {
     expect(\${componentName}).to.be.a('function')
   })
 });
-\``
+\``;
 
 export const tpl_new_test = {
   tpl

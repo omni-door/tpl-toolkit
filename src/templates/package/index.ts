@@ -34,7 +34,7 @@ const tpl =
   "author": "",
   "license": "ISC"
 }
-\``
+\``;
 
 export const tpl_package = {
   tpl,

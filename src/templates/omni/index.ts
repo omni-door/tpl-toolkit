@@ -66,7 +66,7 @@ module.exports = {
 
   plugins: []
 };
-\``
+\``;
 
 export const tpl_omni = {
   tpl

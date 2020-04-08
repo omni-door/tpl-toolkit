@@ -8,7 +8,7 @@ const tpl =
 \\\`\\\`\\\`\${ts ? 'typescript' : 'javascript'}
 \${componentName}()
 \\\`\\\`\\\`
-\``
+\``;
 
 export const tpl_new_readme = {
   tpl

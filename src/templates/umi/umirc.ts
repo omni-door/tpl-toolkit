@@ -4,7 +4,7 @@ const tpl =
 `\`export default {
   mode: 'doc'
 };
-\``
+\``;
 
 export const tpl_umirc = {
   tpl

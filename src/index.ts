@@ -414,7 +414,7 @@ export function newTpl ({
         : 'js'
     }`]: content_test,
     'README.md': content_readme
-  }
+  };
   /**
    * create files
    */

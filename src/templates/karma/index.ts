@@ -123,7 +123,7 @@ module.exports = function(config) {
     concurrency: Infinity
   })
 };
-\``
+\``;
 
 export const tpl_karma = {
   tpl
