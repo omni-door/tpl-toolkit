@@ -40,7 +40,7 @@ export { default as component_test, tpl_new_test } from './new/test';
 export { default as umirc, tpl_umirc } from './umi/umirc';
 export { default as env, tpl_env } from './umi/env';
 
-const tpls = {
+export const tpls = {
   babel,
   commitlint,
   eslint,
