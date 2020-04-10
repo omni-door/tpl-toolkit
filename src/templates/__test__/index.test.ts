@@ -48,7 +48,7 @@ describe('tpl_gitignore template test', function () {
 
 describe('tpl_index template test', function () {
   it('type checking', function () {
-    expect(tpl_index).to.be.a('object');
+    expect(tpl_index).to.be.a('function');
   });
 });
 
