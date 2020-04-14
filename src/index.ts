@@ -309,6 +309,7 @@ export function newTpl ({
   md: MARKDOWN;
   tpls?: (tpls: TPLS_ORIGIN_NEW) => TPLS_NEW_RETURE;
 }) {
+  componentName = componentName.toLowerCase();
   logTime('创建组件');
   logInfo(`开始创建 ${componentName} 组件 (Start create ${componentName} component)`);
   let custom_tpl_new_list = {};

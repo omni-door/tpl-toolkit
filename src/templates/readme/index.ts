@@ -13,16 +13,10 @@ or
 npm run dev
 \\\`\\\`\\\`
 
-## Create a Component
+## Create a Tool
 
-### Class Component
 \\\`\\\`\\\`shell
 npm run new [componentName]
-\\\`\\\`\\\`
-
-### Functional Component
-\\\`\\\`\\\`shell
-npm run new [componentName] -- -f
 \\\`\\\`\\\`
 
 ## Build project
