@@ -5,7 +5,7 @@ const tpl =
     "pre-commit": "lint-staged",
     "pre-push": \${
       (eslint || stylelint || prettier) && test
-        ? '"npm run lint && npm run test"'
+        ? '"npm run lint && npm run test:headless"'
         : (eslint || stylelint || prettier)
             ? '"npm run lint"'
             : test
