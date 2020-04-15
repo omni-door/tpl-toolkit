@@ -20,6 +20,12 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
     commitlint
   } = config;
 
+  const babelDependencies = [
+    dependency('@babel/core'),
+    dependency('@babel/preset-env'),
+    ts ? dependency('@babel/preset-typescript') : ''
+  ];
+
   const buildDependencies = [
     dependency('rollup'),
     dependency('rollup-plugin-node-resolve'),
@@ -28,7 +34,8 @@ export function devDependencies (strategy: STRATEGY, config: Config) {
     dependency('rollup-plugin-node-resolve'),
     ts ? dependency('rollup-plugin-typescript') : '',
     ts ? dependency('rollup-plugin-typescript2') : '',
-    dependency('rollup-plugin-json')
+    dependency('rollup-plugin-json'),
+    ...babelDependencies
   ];
 
   const testDependencies = test ? [

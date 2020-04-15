@@ -1,4 +1,7 @@
 export const devDependencies = {
+  '@babel/core': '7.8.4',
+  '@babel/preset-env': '7.8.4',
+  '@babel/preset-typescript': '7.8.3',
   '@commitlint/cli': '8.3.5',
   '@typescript-eslint/eslint-plugin': '2.19.2',
   '@typescript-eslint/parser': '2.19.2',
