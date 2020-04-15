@@ -3,7 +3,7 @@ export const devDependencies = {
   '@typescript-eslint/eslint-plugin': '2.19.2',
   '@typescript-eslint/parser': '2.19.2',
   'del': '5.1.0',
-  "dumi": "latest",
+  "dumi": "1.0.15",
   'eslint': '6.8.0',
   'eslint-config-prettier': '6.10.1',
   'eslint-plugin-prettier': '3.1.2',

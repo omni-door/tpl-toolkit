@@ -16,7 +16,7 @@ npm run dev
 ## Create a Tool
 
 \\\`\\\`\\\`shell
-npm run new [componentName]
+npm run new [toolName]
 \\\`\\\`\\\`
 
 ## Build project
