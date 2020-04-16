@@ -27,6 +27,7 @@ const tpl =
     \${alter('commitlint', 'script_commitlint')}
     "new": "omni new",
     "build": "omni build",
+    "build:demo": "dumi build",
     "release": "omni release"
   },
   \${alter('commitlint', 'commitlint')}
