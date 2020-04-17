@@ -306,7 +306,7 @@ export function newTpl ({
   test: boolean;
   componentName: string;
   newPath: string;
-  md: MARKDOWN;
+  md?: MARKDOWN;
   tpls?: (tpls: TPLS_ORIGIN_NEW) => TPLS_NEW_RETURE;
 }) {
   logTime('创建组件');
@@ -346,9 +346,11 @@ export function newTpl ({
     style: '' as any,
     md
   };
+  if (md === 'mdx') logInfo('暂不支持 mdx 文档格式，使用 md 代替！(Not support mdx format replace to md format!)');
+
   // component tpl
   const content_index = tpl.component_index(params);
-  const content_readme = md === 'md' && tpl.component_readme(params);
+  const content_readme = md && tpl.component_readme(params);
   const content_test = test && tpl.component_test(params);
 
   const pathToFileContentMap = {

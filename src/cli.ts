@@ -14,8 +14,7 @@ if (args.length > 0) {
       ts: true,
       test: true,
       componentName: 'Omni',
-      newPath: process.cwd(),
-      md: 'md' as 'md'
+      newPath: process.cwd()
     };
     for (let i = 1; i < args.length; i++) {
       const item = args[i];
