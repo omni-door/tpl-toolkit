@@ -21,7 +21,7 @@ The JS-SDK project template for @omni-door
 | babel | babel.config.js |
 | commitlint | commitlint.config.js |
 | eslint | .eslintrc.js |
-| ignore | .eslintignore & .gitignore & .npmignore & prettierignore |
+| ignore | .eslintignore & .gitignore & .npmignore & .prettierignore |
 | karma | karma.conf.js |
 | mocha | mocha.opts |
 | new | the standard templates for `omni new` command |
